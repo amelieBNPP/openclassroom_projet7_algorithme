@@ -6,19 +6,18 @@ Created on Mar 31st
 from script.data_treatments import read_file, write_file
 from script.timer import TimeToCompute
 from script.brutforce import brutforce
+from script.optimized import optim
 import pandas as pd
 
 def main():
     
-    nb_share = 7
+    nb_share = 5
     data = read_file()
     input_share_name = data['share_name'][0:nb_share]
     input_data_prices = data['share_price'][0:nb_share]
-    input_data_yield = pd.Series([
-        float(dta.replace("%","")) for dta in data['share_return'][0:nb_share]
-    ])
+    input_data_yield = data['share_return'][0:nb_share]
 
-    portfolio_capacity = 500
+    portfolio_capacity = 200
 
     # brut_force with loops
     timer_brut_force = TimeToCompute()
@@ -26,11 +25,36 @@ def main():
     result_brut_force = brutforce(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
     timer_brut_force.end()
 
+    # optimize with pulp
+    timer_optim_pulp = TimeToCompute()
+    timer_optim_pulp.start()
+    result_optim_pulp = optim(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
+    result_optim_pulp.optimisation_by_pulp()
+    timer_optim_pulp.end()
+
+    # optimize with scipy
+    timer_optim_scipy = TimeToCompute()
+    timer_optim_scipy.start()
+    result_optim_scipy = optim(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
+    result_optim_scipy.optimisation_with_scipy()
+    timer_optim_scipy.end()
+
+
     print(f'--------------------SOLUTIONS-----------------------------')
  
-    print(f'the brut force program with {len(input_share_name)} shares and a portfolio capacity of {portfolio_capacity} euros: ')
+    print(f'parameters :  {len(input_share_name)} shares and a portfolio capacity of {portfolio_capacity} euros: ')
+    
+    print('--BRUT FORCE--')
     print(result_brut_force)
-    print(f'the brut force programme with itertools run during {timer_brut_force.time_pass()} sec \n')
+    print(timer_brut_force.time_pass())
+
+    print('--OPTIM PULP--')
+    result_optim_pulp.show_optim()
+    print(timer_optim_pulp.time_pass())
+
+    print('--OPTIM SCIPY--')
+    result_optim_scipy.show_optim()
+    print(timer_optim_scipy.time_pass())
 
 
 
