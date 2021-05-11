@@ -11,18 +11,18 @@ import pandas as pd
 
 def main():
     
-    nb_share = 5
-    data = read_file()
+    nb_share = 20
+    data = read_file("Share_prices.csv")
     input_share_name = data['share_name'][0:nb_share]
     input_data_prices = data['share_price'][0:nb_share]
     input_data_yield = data['share_return'][0:nb_share]
 
-    portfolio_capacity = 200
+    portfolio_capacity = 500
 
     # brut_force with loops
     timer_brut_force = TimeToCompute()
     timer_brut_force.start()
-    result_brut_force = brutforce(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
+    result_brut_force = 0#brutforce(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
     timer_brut_force.end()
 
     # optimize with pulp
@@ -32,7 +32,7 @@ def main():
     result_optim_pulp.optimisation_by_pulp()
     timer_optim_pulp.end()
 
-    # optimize with scipy
+    # # optimize with scipy
     timer_optim_scipy = TimeToCompute()
     timer_optim_scipy.start()
     result_optim_scipy = optim(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)

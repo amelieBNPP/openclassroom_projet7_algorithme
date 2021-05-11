@@ -9,5 +9,5 @@ class TimeToCompute:
         self.ending = time()
 
     def time_pass(self):
-        return round(self.ending - self.begining,2)
+        return f'programme run during {round(self.ending - self.begining,2)} secondes'
 

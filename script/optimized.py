@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from scipy.optimize import LinearConstraint, minimize
-from pulp import *
+from scipy.optimize import minimize
+from pulp import LpVariable, LpProblem, LpMaximize, lpSum, value
 
 
 class optim:
@@ -60,7 +60,7 @@ class optim:
         # add constraints
         ## objective function
         total_score += lpSum([share_return_dic[idx] * share_vars[idx] for idx in share_vars])
-        ## constraint
+        # ## constraint
         total_score += lpSum([share_price_dic[idx] * share_vars[idx] for idx in share_vars]) <= self.portfolio_capacity
 
         # solve problem
