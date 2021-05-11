@@ -2,16 +2,16 @@
 
 _owner: [Amélie].(https://github/ameliebnpp)
 
-##Developpement guide
+## Developpement guide
 
-###Dependencies
+### Dependencies
 
 Install dependencies :
 ```bash
 pip install requirements.txt
 ```
 
-###Installation
+### Installation
 
 First, clone the project:
 
@@ -19,7 +19,7 @@ First, clone the project:
 git clone --recursive git@github.com:/amelieBNPP/openclassroom_projet7_algorithme && cd openclassroom_projet7_algorithme
 ```
 
-##Optimisation
+## Optimisation
 
 portfolio_capacity = 500€
 ----------------------------------------
@@ -40,11 +40,11 @@ nb_share_1, nb_share_2, ..., nb_share_n are integer
 nb_share_1 * share_price_1 + nb_share_2 * share_price_2 + ... + nb_share_n * share_price_n < portfolio_capacity
 
 
-###Brute force
+### Brute force
 
 The first part of the project is an optimisation using brut force program that means testing all solutions and choose the best one
 
-###Optimisation
+### Optimisation
 
 The second part of the project is to increase the speed of the process using optimiser :
 - Pulp
