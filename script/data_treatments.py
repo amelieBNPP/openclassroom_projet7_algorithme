@@ -3,7 +3,7 @@ import csv
 import os
 
 class TreatData:
-
+    
     @staticmethod
     def read_file(file_name):
         colnames = ['share_name', 'share_price', 'share_return']
@@ -11,7 +11,15 @@ class TreatData:
         return data
 
     @staticmethod
-    def write_file(file_to_save, overwrite=True):
+    def remove_null_price(data):
+        data = data[data['share_price'] != 0]
+        return data
+    def remove_negative_price(data):
+        data = data[data['share_price'] > 0]
+        return data
+
+    @staticmethod
+    def write_file(self, file_to_save, overwrite=True):
         if not os.path.exists("./solutions/brut_force.csv"):
             new_file = open("./solutions/brut_force.csv", 'x')
             new_file.close()

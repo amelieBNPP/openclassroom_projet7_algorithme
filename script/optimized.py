@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
-from pulp import LpVariable, LpProblem, LpMaximize, lpSum, value
+from pulp import LpVariable, LpProblem, LpStatus, LpMaximize, lpSum, value
 
 
 class optim:
@@ -11,19 +11,19 @@ class optim:
         self.share_return = share_return
         self.portfolio_capacity = portfolio_capacity
 
-    def objective_function(self, x):
+    def objective_function(self, x) -> float:
         solution = 0    
         for i in range(len(x)):
             solution += x[i] * self.share_return[i] 
         return -solution
 
-    def constraint(self, x):
+    def constraint(self, x) -> float:
         portfolio_capacity = self.portfolio_capacity
         for i in range(len(x)):
             portfolio_capacity -= x[i] * self.share_price[i]
         return portfolio_capacity
 
-    def optimisation_with_scipy(self):
+    def optimisation_with_scipy(self) -> None:
 
         x0 = np.zeros(len(self.share_name))
 
@@ -41,13 +41,15 @@ class optim:
         }
 
         self.best_profit = {"Total Profit: ": round(-solution.fun,2)}
+        self.best_cost = {"Best cost: " : solution.x  * self.share_price}
 
-    def show_optim(self):
+    def show_optim(self) -> None:
         print(self.best_profit)
         print(self.best_share)
+        print(self.best_cost)
  
 
-    def optimisation_by_pulp(self):
+    def optimisation_by_pulp(self) -> None:
 
         share_price_dic = dict(zip(self.share_name,self.share_price))
         share_return_dic = dict(zip(self.share_name, self.share_return))
@@ -56,24 +58,29 @@ class optim:
 
         # setup problem
         total_score = LpProblem("optimize_investment", LpMaximize)
-
-        # add constraints
+ 
         ## objective function
         total_score += lpSum([share_return_dic[idx] * share_vars[idx] for idx in share_vars])
-        # ## constraint
+        ## constraint
         total_score += lpSum([share_price_dic[idx] * share_vars[idx] for idx in share_vars]) <= self.portfolio_capacity
 
         # solve problem
         total_score.solve()
-        print("Total Profit: ", value(total_score.objective))
 
         # Check the status of the problem, can be use at each step of the optimisation
-        # print("Current Status: ", LpStatus[total_score.status]) 
+        print("Current Status: ", LpStatus[total_score.status]) 
 
         # print solution
         self.best_share = {
             share.name : share.varValue
             for share in total_score.variables() if share.varValue != 0
         }
-        self.best_profit = {"Total Profit: ": value(total_score.objective)}
+
+        cost_share = [
+            share_price_dic[share.name.replace("share_Share_","Share-")]*share.varValue
+            for share in total_score.variables()
+        ]
+
+        self.best_profit = {"Total Profit: ": round(value(total_score.objective),2)}
+        self.best_cost = {"Best cost: " : round(sum(cost_share),2)}
 
