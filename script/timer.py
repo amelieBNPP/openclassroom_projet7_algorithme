@@ -1,6 +1,7 @@
 from time import time
 
 class TimeToCompute:
+    """This class allow to test the speed of a function"""
 
     def start(self):
         self.begining = time()

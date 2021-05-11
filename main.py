@@ -3,16 +3,15 @@
 Created on Mar 31st
 @author: Amelie Noury
 """
-from script.data_treatments import read_file, write_file
+from script.data_treatments import TreatData
 from script.timer import TimeToCompute
-from script.brutforce import brutforce
+from script.brutforce import BrutForce
 from script.optimized import optim
-import pandas as pd
 
 def main():
     
     nb_share = 20
-    data = read_file("Share_prices.csv")
+    data = TreatData.read_file("Share_prices.csv")
     input_share_name = data['share_name'][0:nb_share]
     input_data_prices = data['share_price'][0:nb_share]
     input_data_yield = data['share_return'][0:nb_share]
@@ -22,7 +21,8 @@ def main():
     # brut_force with loops
     timer_brut_force = TimeToCompute()
     timer_brut_force.start()
-    result_brut_force = 0#brutforce(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
+    result_brut_force = BrutForce(input_share_name, input_data_prices, input_data_yield, portfolio_capacity)
+    result_brut_force.brut_force()
     timer_brut_force.end()
 
     # optimize with pulp
