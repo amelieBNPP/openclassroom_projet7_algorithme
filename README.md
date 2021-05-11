@@ -1,6 +1,6 @@
 # openclassroom - projet7 - algorithm & optimisation
 
-_owner: [Amélie].(https://github/ameliebnpp)
+_Owner: [Amélie](https://github.com/ameliebnpp)_
 
 ## Developpement guide
 
@@ -22,13 +22,14 @@ git clone --recursive git@github.com:/amelieBNPP/openclassroom_projet7_algorithm
 ## Optimisation
 
 portfolio_capacity = 500€
-----------------------------------------
+
 |Share_name |share_price |share_return |
+|-----------|------------|-------------|
 |share_1    | 5€         | 4%          |
 |share_2    | 12€        | 5%          |
 | ...       | ...        | ...         |
 |share_n    | 21€        |  12%        |
-----------------------------------------
+
 
 We want to find nb_share_1, nb_share_2, ..., nb_share_n we want to buy to get the maximum return.
 
