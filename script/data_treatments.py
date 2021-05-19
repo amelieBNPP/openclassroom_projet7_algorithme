@@ -14,6 +14,8 @@ class TreatData:
     def remove_null_price(data):
         data = data[data['share_price'] != 0]
         return data
+    
+    @staticmethod
     def remove_negative_price(data):
         data = data[data['share_price'] > 0]
         return data
@@ -28,3 +30,7 @@ class TreatData:
             solution = csv.writer(file)#, lineterminator = ', ', quoting=csv.QUOTE_ALL)
             solution.writerows(file_to_save)
         print("save data in file: 0K")
+
+    @staticmethod
+    def data_describe(data):
+        print(data.describe())
