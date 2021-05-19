@@ -4,7 +4,7 @@ from scipy.optimize import minimize
 from pulp import LpVariable, LpProblem, LpStatus, LpMaximize, lpSum, value
 
 
-class optim:
+class Optim:
     def __init__(self, share_name, share_price, share_return, portfolio_capacity) -> None:
         self.share_name = share_name
         self.share_price = share_price
@@ -35,7 +35,7 @@ class optim:
         solution = minimize(self.objective_function, x0, method='SLSQP', \
             bounds=bnds, constraints=[con1])
 
-        self.best_share = {
+        self.best_shares = {
             self.share_name[i] : round(solution.x[i],2)
             for i in range(len(solution.x)) if round(solution.x[i]) != 0
         }
@@ -45,7 +45,7 @@ class optim:
 
     def show_optim(self) -> None:
         print(self.best_profit)
-        print(self.best_share)
+        print(self.best_shares)
         print(self.best_cost)
  
 
@@ -66,18 +66,17 @@ class optim:
 
         # solve problem
         total_score.solve()
-
         # Check the status of the problem, can be use at each step of the optimisation
         print("Current Status: ", LpStatus[total_score.status]) 
 
         # print solution
-        self.best_share = {
+        self.best_shares = {
             share.name : share.varValue
             for share in total_score.variables() if share.varValue != 0
         }
 
         cost_share = [
-            share_price_dic[share.name.replace("share_Share_","Share-")]*share.varValue
+            share_price_dic[share.name.replace('share_','').replace('_','-')]*share.varValue
             for share in total_score.variables()
         ]
 

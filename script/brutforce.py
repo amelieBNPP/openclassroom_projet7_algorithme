@@ -47,11 +47,17 @@ class BrutForce:
         ]
 
         # 4. optimisation
-        best_profit = {"Total Profit" : max(all_yields)}
-        best_shares_index = all_yields.index(best_profit["Total Profit"])
+        self.best_profit = {"Total Profit" : max(all_yields)}
+        best_shares_index = all_yields.index(self.best_profit["Total Profit"])
         best_shares_list = all_combinaisons[best_shares_index]
-        best_shares = {
+        self.best_shares = {
             self.share_name[share_idx]: (best_combinaison / self.share_price[share_idx])
             for share_idx, best_combinaison in enumerate(best_shares_list) if best_combinaison != 0}
 
-        return best_profit, best_shares
+        self.best_cost = {"Best cost: " : sum(best_shares_list)}
+
+    def show_optim(self) -> None:
+        print(self.best_profit)
+        print(self.best_shares)
+        print(self.best_cost)
+ 
