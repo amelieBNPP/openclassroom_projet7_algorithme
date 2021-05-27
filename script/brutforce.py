@@ -54,10 +54,7 @@ class BrutForce:
             self.share_name[share_idx]: (best_combinaison / self.share_price[share_idx])
             for share_idx, best_combinaison in enumerate(best_shares_list) if best_combinaison != 0}
 
-        self.best_cost = {"Best cost: " : sum(best_shares_list)}
+        self.best_cost = {"Best cost" : sum(best_shares_list)}
 
-    def show_optim(self) -> None:
-        print(self.best_profit)
-        print(self.best_shares)
-        print(self.best_cost)
+        return self.best_profit, self.best_shares, self.best_cost
  

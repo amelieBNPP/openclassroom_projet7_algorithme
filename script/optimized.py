@@ -23,7 +23,7 @@ class Optim:
             portfolio_capacity -= x[i] * self.share_price[i]
         return portfolio_capacity
 
-    def optimisation_with_scipy(self) -> None:
+    def optimisation_with_scipy(self):
 
         x0 = np.zeros(len(self.share_name))
 
@@ -40,16 +40,12 @@ class Optim:
             for i in range(len(solution.x)) if round(solution.x[i]) != 0
         }
 
-        self.best_profit = {"Total Profit: ": round(-solution.fun,2)}
-        self.best_cost = {"Best cost: " : solution.x  * self.share_price}
+        self.best_profit = {"Total Profit": round(-solution.fun,2)}
+        self.best_cost = {"Best cost" : solution.x  * self.share_price}
 
-    def show_optim(self) -> None:
-        print(self.best_profit)
-        print(self.best_shares)
-        print(self.best_cost)
- 
+        return self.best_profit, self.best_shares, self.best_cost 
 
-    def optimisation_by_pulp(self) -> None:
+    def optimisation_by_pulp(self):
 
         share_price_dic = dict(zip(self.share_name,self.share_price))
         share_return_dic = dict(zip(self.share_name, self.share_return))
@@ -80,6 +76,8 @@ class Optim:
             for share in total_score.variables()
         ]
 
-        self.best_profit = {"Total Profit: ": round(value(total_score.objective),2)}
-        self.best_cost = {"Best cost: " : round(sum(cost_share),2)}
+        self.best_profit = {"Total Profit": round(value(total_score.objective),2)}
+        self.best_cost = {"Best cost" : round(sum(cost_share),2)}
+
+        return self.best_profit, self.best_shares, self.best_cost
 
