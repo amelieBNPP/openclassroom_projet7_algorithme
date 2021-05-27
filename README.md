@@ -51,3 +51,7 @@ The second part of the project is to increase the speed of the process using opt
 - Pulp
 - Scipy
 
+### Attending results
+
+![Attending results](/result.png)
+
