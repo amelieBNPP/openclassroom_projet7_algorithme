@@ -13,12 +13,12 @@ class TreatData:
     @staticmethod
     def remove_null_price(data):
         data = data[data['share_price'] != 0]
-        return data
+        return data.reset_index(drop=True)
     
     @staticmethod
     def remove_negative_price(data):
         data = data[data['share_price'] > 0]
-        return data
+        return data.reset_index(drop=True)
 
     @staticmethod
     def write_file(self, file_to_save, overwrite=True):

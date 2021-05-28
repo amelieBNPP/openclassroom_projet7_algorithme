@@ -9,6 +9,7 @@ class Controller:
     """This controller runs the algorithms and call the view to display the results"""
 
     def __init__(self, file_name, portfolio_capacity, algorithm, nb_share=None):
+        self.file_name = file_name
         self.data = TreatData.read_file(file_name)
         self.nb_share_before_treatment = len(self.data)
         self.data = TreatData.remove_null_price(self.data)
@@ -48,8 +49,24 @@ class Controller:
 
         self.show_results.display_results(self.optim_result, timer_optim.time_pass(), self.nb_share_before_treatment)
 
-        # result_to_plot = Graph.plot_result(result_optim_pulp, self.data)
-        # Graph.plot_cloud(self.input_data_prices, self.input_data_yield, result_to_plot)
+        # result_graphique
+        if self.file_name == "dataset1.csv":
+            sienna_result = ['Share-GRUT']
+        elif self.file_name == "dataset2.csv":
+            sienna_result = ['Share-ECAQ', 'Share-IXCI', 'Share-FWBE', 'Share-ZOFA', 'Share-PLLK', 'Share-YFVZ',
+            'Share-ANFX', 'Share-PATS', 'Share-NDKR', 'Share-ALIY', 'Share-JWGF', 'Share-JGTW', 'Share-FAPS', 'Share-VCAX',
+            'Share-LFXB', 'Share-DWSK', 'Share-XQII', 'Share-ROOM']
+        else:
+            sienna_result = None
+
+        if sienna_result is not None:
+            sienna_result_to_plot = Graph.find_share_in_data_file(sienna_result, self.data)
+        else:
+            sienna_result_to_plot = None
+        
+        result_to_plot = Graph.plot_result(self.optim_result, self.data)
+
+        Graph.plot_cloud(self.input_data_prices, self.input_data_yield, result_to_plot, sienna_result_to_plot)
         # timer_optim_pulp.big_o(result_optim_pulp.optimisation_by_pulp(), self.data)
 
 

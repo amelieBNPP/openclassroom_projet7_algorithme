@@ -38,11 +38,12 @@ class BrutForce:
 
         # 3. yields by share
         yields = [
-            self.share_return[idx] / self.share_price[idx] for idx in range(nb_unknow)
+            self.share_return[idx] for idx in range(nb_unknow)
+            # self.share_return[idx] * self.share_price[idx] for idx in range(nb_unknow)
         ]
 
         all_yields = [
-            sum(map(mul, combinations, yields))
+            sum(map(mul, combinations, yields))/100
             for combinations in all_combinaisons
         ]
 

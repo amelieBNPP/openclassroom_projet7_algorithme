@@ -4,23 +4,32 @@ from pandas.core.frame import DataFrame
 class Graph:
 
     @staticmethod
-    def plot_cloud(prices, returns, optim_result=None) -> None:
+    def plot_cloud(prices, returns, optim_result=None, optim_to_compare=None) -> None:
         plt.plot(prices,returns,"ob", label="all shares")
-        plt.ylabel('Return after 2years')
-        plt.xlabel('Price')
+        plt.ylabel('Return after 2years in €')
+        plt.xlabel('Price in €')
         plt.title('Relation between price and return of shares')
 
         if optim_result is not None:
             plt.plot(optim_result['share_price'], optim_result['share_return'], "or", label = "optimized shares")
-            plt.legend()
+            plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.15))
+
+        if optim_to_compare is not None:
+            plt.plot(optim_to_compare['share_price'], optim_to_compare['share_return'], "xy", label = "optimized shares of Sienna")
+            plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.15))
+
         plt.show()
 
     @staticmethod
     def plot_result(results, data) -> DataFrame:
-        share_name = list(results.best_share.keys())
+        share_name = list(results[1].keys())
         share_name_clean= [name.replace('share_','').replace('_','-') for name in share_name]
         
-        index_to_plot = [data.loc[data['share_name'] == share_clean].index[0] for share_clean in share_name_clean]
+        return Graph.find_share_in_data_file(share_name_clean, data)
+
+    @staticmethod
+    def find_share_in_data_file(share_list, data) -> DataFrame:
+        index_to_plot = [data.loc[data['share_name'] == share_name].index[0] for share_name in share_list]
         return data.iloc[index_to_plot,:]
 
     @staticmethod
@@ -34,12 +43,12 @@ class Graph:
         plt.title('Time to run the brut force program in relation with the number of shares')
         plt.show()
 
-        portfolio_capacity = [10, 20, 30, 50, 80, 100, 150, 200, 300]
-        time_ptfCapacity = [0, 0, 0.08, 51.43, ]
-        plt.plot(nb_share, time_ptfCapacity, linestyle='solid')
+        portfolio_capacity = [10, 20, 30, 50, 80]
+        time_ptfCapacity = [0, 0, 0.08, 51.43, 350000]
+        plt.plot(portfolio_capacity, time_ptfCapacity, linestyle='solid')
         plt.ylabel('time to run program (sec)')
-        plt.xlabel('number of shares')
-        plt.title('Time to run the brut force program in relation with the number of shares')
+        plt.xlabel('portfolio capacity in €')
+        plt.title('Time to run the brut force program in relation with the portfolio capacity')
         plt.show()
 
  

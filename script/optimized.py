@@ -14,7 +14,7 @@ class Optim:
     def objective_function(self, x) -> float:
         solution = 0    
         for i in range(len(x)):
-            solution += x[i] * self.share_return[i] 
+            solution += x[i] * (self.share_return[i] * self.share_price[i])
         return -solution
 
     def constraint(self, x) -> float:
@@ -40,7 +40,7 @@ class Optim:
             for i in range(len(solution.x)) if round(solution.x[i]) != 0
         }
 
-        self.best_profit = {"Total Profit": round(-solution.fun,2)}
+        self.best_profit = {"Total Profit": round(-solution.fun/100,2)}
         self.best_cost = {"Best cost" : solution.x  * self.share_price}
 
         return self.best_profit, self.best_shares, self.best_cost 
@@ -56,7 +56,7 @@ class Optim:
         total_score = LpProblem("optimize_investment", LpMaximize)
  
         ## objective function
-        total_score += lpSum([share_return_dic[idx] * share_vars[idx] for idx in share_vars])
+        total_score += lpSum([share_return_dic[idx]* share_price_dic[idx] * share_vars[idx] for idx in share_vars])
         ## constraint
         total_score += lpSum([share_price_dic[idx] * share_vars[idx] for idx in share_vars]) <= self.portfolio_capacity
 
@@ -76,7 +76,7 @@ class Optim:
             for share in total_score.variables()
         ]
 
-        self.best_profit = {"Total Profit": round(value(total_score.objective),2)}
+        self.best_profit = {"Total Profit": round(value(total_score.objective/100),2)}
         self.best_cost = {"Best cost" : round(sum(cost_share),2)}
 
         return self.best_profit, self.best_shares, self.best_cost
