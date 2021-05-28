@@ -14,9 +14,9 @@ def main():
     - nb_share(optional) : by default all the share of the input but can be troncated if needed
     """
 
-    file_name = "dataset2.csv"
+    file_name = "Share_prices.csv"
     portfolio_capacity = 500
-    optim_function = 'run_optim_pulp'
+    optim_function = 'run_brut_force'
     nb_share = None
 
     controller_algo = Controller(file_name, portfolio_capacity, optim_function, nb_share)

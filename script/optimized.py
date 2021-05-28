@@ -27,8 +27,7 @@ class Optim:
 
         x0 = np.zeros(len(self.share_name))
 
-        max_number_of_share = [self.portfolio_capacity//price for price in self.share_price]
-        bnds = [(0,n+1) for n in max_number_of_share]
+        bnds = [(0,1) for n in range(len(self.share_name))]
 
         con1 = {'type': 'ineq', 'fun':self.constraint}
 
@@ -50,7 +49,7 @@ class Optim:
         share_price_dic = dict(zip(self.share_name,self.share_price))
         share_return_dic = dict(zip(self.share_name, self.share_return))
 
-        share_vars = LpVariable.dicts("share", self.share_name, lowBound=0, cat='Integer')
+        share_vars = LpVariable.dicts("share", self.share_name, lowBound=0, upBound=1, cat='Integer')
 
         # setup problem
         total_score = LpProblem("optimize_investment", LpMaximize)

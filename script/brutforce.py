@@ -24,26 +24,14 @@ class BrutForce:
         # 1. compute maximum
         nb_unknow = len(self.share_price)
 
-        max_number_of_share = [self.portfolio_capacity//price for price in self.share_price]
-
-        all_values = [ 
-            [
-                self.share_price[idx] * nb_share for nb_share in range(max_share+1)
-            ] 
-            for idx, max_share in enumerate(max_number_of_share)
-        ]
+        all_values = [[0, price] for price in self.share_price]
 
         # 2. compute all combinaison
         all_combinaisons = [combinaison for combinaison in product(*all_values) if sum(combinaison) <= self.portfolio_capacity]
 
         # 3. yields by share
-        yields = [
-            self.share_return[idx] for idx in range(nb_unknow)
-            # self.share_return[idx] * self.share_price[idx] for idx in range(nb_unknow)
-        ]
-
         all_yields = [
-            sum(map(mul, combinations, yields))/100
+            sum(map(mul, combinations, self.share_return))/100
             for combinations in all_combinaisons
         ]
 

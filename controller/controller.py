@@ -67,6 +67,7 @@ class Controller:
         result_to_plot = Graph.plot_result(self.optim_result, self.data)
 
         Graph.plot_cloud(self.input_data_prices, self.input_data_yield, result_to_plot, sienna_result_to_plot)
+        Graph.hard_plot_brut_force_time()
         # timer_optim_pulp.big_o(result_optim_pulp.optimisation_by_pulp(), self.data)
 
 

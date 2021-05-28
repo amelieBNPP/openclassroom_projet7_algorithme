@@ -34,8 +34,8 @@ class Graph:
 
     @staticmethod
     def hard_plot_brut_force_time() -> None:
-        time_nbShare = [0, 0, 0.01, 0.07, 0.4, 2.7, 60.85, 1404.85]
-        nb_share = [1, 2, 3, 4, 5, 6, 7, 8]
+        time_nbShare = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0.01, 0.02, 0.04, 0.06, 0.11, 0.23, 0.45, 0.9, 1.79, 3.47, 5.96]
+        nb_share = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
        
         plt.plot(nb_share, time_nbShare, linestyle='solid')
         plt.ylabel('time to run program with portfoliocapacity of 500€ (sec)')
