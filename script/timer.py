@@ -1,6 +1,7 @@
 from time import time
 from bigO import BigO
 
+
 class TimeToCompute:
     """This class allow to test the speed of a function"""
 
@@ -16,4 +17,3 @@ class TimeToCompute:
     @staticmethod
     def big_o(fun, dta):
         print(BigO.test(fun, dta))
-
