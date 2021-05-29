@@ -11,7 +11,7 @@ class Graph:
         plt.title('Relation between price and return of shares')
 
         if optim_result is not None:
-            plt.plot(optim_result['share_price'], optim_result['share_return'], "or", label = "optimized shares")
+            plt.plot(optim_result['share_price'], optim_result['share_return'], "or", label = "Brut Force selection")#optimized shares
             plt.legend(loc='upper center', bbox_to_anchor=(0.5,-0.15))
 
         if optim_to_compare is not None:
@@ -43,12 +43,14 @@ class Graph:
         plt.title('Time to run the brut force program in relation with the number of shares')
         plt.show()
 
-        portfolio_capacity = [10, 20, 30, 50, 80]
-        time_ptfCapacity = [0, 0, 0.08, 51.43, 350000]
-        plt.plot(portfolio_capacity, time_ptfCapacity, linestyle='solid')
-        plt.ylabel('time to run program (sec)')
-        plt.xlabel('portfolio capacity in €')
-        plt.title('Time to run the brut force program in relation with the portfolio capacity')
+        time_nbShare = [ 0.05, 0.15, 0.06, 0.46, 0.36, 0.17, 0.23, 0.28, 0.21, 0.21]
+        nb_share = [100, 200, 300, 400, 500, 600, 700, 800, 900, 957]
+       
+        plt.plot(nb_share, time_nbShare, linestyle='solid')
+        plt.ylabel('time to run program with portfoliocapacity of 500€ (sec)')
+        plt.xlabel('number of shares')
+        plt.title('Time to run the optimized program in relation with the number of shares')
         plt.show()
+
 
  

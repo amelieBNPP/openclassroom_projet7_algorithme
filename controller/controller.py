@@ -4,6 +4,7 @@ from script.optimized import Optim
 from script.graphique import Graph
 from script.data_treatments import TreatData
 from view.show_results import View
+from script.optimized_V2 import optimized_v2
 
 class Controller:
     """This controller runs the algorithms and call the view to display the results"""
@@ -44,6 +45,9 @@ class Controller:
         if self.algorithm == 'run_optim_scipy':
             result_optim_scipy = Optim(self.input_share_name, self.input_data_prices, self.input_data_yield, self.portfolio_capacity)
             self.optim_result = result_optim_scipy.optimisation_with_scipy()
+
+        if self.algorithm == 'test':
+            self.optim_result = optimized_v2(self.input_data_prices, self.input_data_yield, self.input_share_name, self.portfolio_capacity)
 
         timer_optim.end()
 

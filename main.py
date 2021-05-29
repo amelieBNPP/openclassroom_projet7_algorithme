@@ -15,9 +15,9 @@ def main():
     """
 
     file_name = "Share_prices.csv"
-    portfolio_capacity = 500
-    optim_function = 'run_brut_force'
-    nb_share = None
+    portfolio_capacity = 20
+    optim_function = 'test'
+    nb_share = 5
 
     controller_algo = Controller(file_name, portfolio_capacity, optim_function, nb_share)
     controller_algo.run()
