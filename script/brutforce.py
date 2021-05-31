@@ -2,7 +2,6 @@
 
 from itertools import product
 from operator import mul
-import numpy as np
 
 
 class BrutForce:

@@ -15,7 +15,7 @@ def main():
     - nb_share(optional) : by default all the share of the input but can be troncated if needed
     """
 
-    file_name = "Share_prices.csv"
+    file_name = "dataset2.csv"
     portfolio_capacity = 500
     optim_function = 'run_optim_pulp'
     nb_share = None

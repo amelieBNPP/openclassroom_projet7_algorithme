@@ -1,6 +1,5 @@
 """Optimized algorithme with Pulp and Scipy"""
 import numpy as np
-import pandas as pd
 from scipy.optimize import minimize
 from pulp import LpVariable, LpProblem, LpStatus, LpMaximize, lpSum, value
 
@@ -17,7 +16,13 @@ class Optim:
         self.share_return = share_return
         self.portfolio_capacity = portfolio_capacity
 
-    """Scipy algorithm"""
+    """
+    Scipy algorithm:
+    Define objective function, constraint, then run the optimisation
+    Inputs: share names, share prices, share returns, and portfolio capacity
+    Output: return an optimized solution of float
+
+    """
 
     def objective_function(self, x) -> float:
         """ define the objective function
@@ -57,7 +62,14 @@ class Optim:
 
         return self.best_profit, self.best_shares, self.best_cost
 
-    """PULP algorithm"""
+    """
+    PULP algorithm :
+    Define the unknow variables, setup the probleme and the objective function,
+    add constraints and run the optimisation
+    Inputs: share names, share prices, share returns, and portfolio capacity
+    Output: return an optimized solution of Integer
+   
+    """
 
     def optimisation_by_pulp(self):
         """run the optimisation"""
@@ -84,8 +96,8 @@ class Optim:
 
         # solve problem
         total_score.solve()
-        # Check the status of the problem, can be use at each step of the
-        # optimisation
+
+        # Check the status of the problem
         print("Current Status: ", LpStatus[total_score.status])
 
         # print solution
